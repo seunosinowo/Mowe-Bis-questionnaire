@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  standard
+  enterprise
+}
+
+model AnalyticsResponse {
+  id             String   @id @default(cuid())
+  companyName    String
+  departmentName String
+  gender         String
+  plan           Plan
+  answers        Json
+  belongingScore Float
+  leadershipScore Float
+  talentFlowScore Float
+  cultureScore   Float
+  overallScore   Float
+  wellBeingScore Float?
+  inclusionScore Float?
+  submittedAt    DateTime
+  createdAt      DateTime @default(now())
+
+  @@index([companyName])
+  @@index([departmentName])
+  @@index([gender])
+  @@index([plan])
+  @@index([submittedAt])
+}
